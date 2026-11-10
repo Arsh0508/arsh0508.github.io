@@ -446,7 +446,7 @@ function vouchingBlocked() {
   const p = me.person;
   if (!p.can_vouch) return 'Your vouching rights are paused. Talk to an admin.';
   if (me.can_vouch_from && new Date(me.can_vouch_from) > new Date()) return `New members wait a few days before vouching. You can start on ${fmtDate(me.can_vouch_from)}.`;
-  if (me.vouches_left_this_week <= 0) return 'You’ve used all your vouches for this week.';
+  if (!me.unlimited_vouches && me.vouches_left_this_week <= 0) return 'You’ve used all your vouches for this week.';
   return null;
 }
 
@@ -455,7 +455,8 @@ function memberShellHtml() {
   if (tab === 'admin' && !p.is_admin) tab = 'vouch';
   const blocked = vouchingBlocked();
   const left = me.vouches_left_this_week;
-  const line = blocked || `You have ${left} ${left === 1 ? 'vouch' : 'vouches'} left this week.`;
+  const line = blocked || (me.unlimited_vouches ? 'As an admin, you have no weekly vouch limit.'
+    : `You have ${left} ${left === 1 ? 'vouch' : 'vouches'} left this week.`);
   const tabBtn = (id, label) => `<button class="${tab === id ? 'on' : ''}" data-action="tab" data-tab="${id}">${label}</button>`;
   return card(`${pill('member')}${p.is_admin ? ' <span class="pill">Admin</span>' : ''}
       <h2 class="mt">Hi, ${esc(firstName(p.full_name))}</h2>
@@ -596,7 +597,7 @@ function settingsHtml(s) {
     <div class="grid2">
       <div><label for="s-need">Vouches needed to approve</label><input type="number" id="s-need" name="vouches_needed" min="1" max="10" value="${esc(s.vouches_needed)}"></div>
       <div><label for="s-obj">Objections needed to reject</label><input type="number" id="s-obj" name="objections_needed" min="1" max="10" value="${esc(s.objections_needed)}"></div>
-      <div><label for="s-week">Vouches per member per week</label><input type="number" id="s-week" name="weekly_limit" min="1" max="50" value="${esc(s.weekly_limit)}"></div>
+      <div><label for="s-week">Vouches per member per week (admins: no limit)</label><input type="number" id="s-week" name="weekly_limit" min="1" max="50" value="${esc(s.weekly_limit)}"></div>
       <div><label for="s-wait">Days before new members can vouch</label><input type="number" id="s-wait" name="wait_days" min="0" max="90" value="${esc(s.wait_days)}"></div>
       <div><label for="s-days">Days a request stays open</label><input type="number" id="s-days" name="request_days" min="1" max="90" value="${esc(s.request_days)}"></div>
     </div>
