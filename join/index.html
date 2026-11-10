@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Join · IIT Patna Student Alumni Association</title>
+<style>
+  :root {
+    --bg: #f5f4f0; --card: #ffffff; --text: #1c1c1a; --muted: #6a6964; --line: #e3e1da; --field: #faf9f6;
+    --accent: #1e7a5a; --accent-text: #ffffff; --accent-soft: #e2f0e9;
+    --warn: #8f5600; --warn-soft: #fbeed6; --danger: #b3261e; --danger-soft: #fbe3e1;
+    --shadow: 0 1px 2px rgba(0,0,0,.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141413; --card: #1e1e1c; --text: #ecebe6; --muted: #a19f98; --line: #34332f; --field: #191917;
+      --accent: #4fc49b; --accent-text: #0c1f17; --accent-soft: #1a3128;
+      --warn: #f1b75e; --warn-soft: #382a13; --danger: #ff8b82; --danger-soft: #3c1d1b;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 20px 16px 64px; }
+  header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+  h1 { font-size: 21px; line-height: 1.25; margin: 0; letter-spacing: -0.01em; }
+  h2 { font-size: 18px; line-height: 1.3; margin: 0 0 8px; }
+  p { margin: 0 0 10px; }
+  a { color: var(--accent); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow); }
+  .muted { color: var(--muted); }
+  .small { font-size: 14px; }
+  .mono { font-variant-numeric: tabular-nums; font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: .95em; }
+  .mt { margin-top: 12px; }
+  .center { text-align: center; }
+  label { display: block; font-weight: 600; font-size: 14px; margin: 14px 0 6px; }
+  input[type=text], input[type=tel], input[type=search], input[type=url], input[type=number], textarea {
+    width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--field); color: var(--text); font: inherit; min-width: 0;
+  }
+  textarea { resize: vertical; }
+  .phone { display: flex; gap: 8px; }
+  .phone input:first-child { flex: 0 0 76px; text-align: center; }
+  .objections { margin-top: 8px; padding: 8px 10px; border-left: 3px solid var(--danger); background: var(--danger-soft); border-radius: 6px; }
+  .objections > div + div { margin-top: 4px; }
+  .g-btn { display: flex; justify-content: center; min-height: 44px; margin-top: 8px; }
+  footer { max-width: 560px; margin: 0 auto; padding: 0 16px 32px; text-align: center; }
+  input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button, .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 16px;
+    border-radius: 10px; border: 1px solid transparent; font: inherit; font-weight: 600; cursor: pointer;
+    text-decoration: none; line-height: 1.2;
+  }
+  button:disabled { opacity: .55; cursor: default; }
+  .sm { padding: 8px 12px; font-size: 14px; }
+  .primary { background: var(--accent); color: var(--accent-text); }
+  .secondary { background: transparent; color: var(--text); border-color: var(--line); }
+  .danger { background: transparent; color: var(--danger); border-color: var(--danger-soft); }
+  .danger-solid { background: var(--danger); color: #fff; }
+  .link { background: none; border: 0; padding: 0; color: var(--accent); font-weight: 500; text-decoration: underline; font-size: inherit; }
+  .full { width: 100%; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .tabs { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px; margin-bottom: 14px; overflow-x: auto; }
+  .tabs button { flex: 1 0 auto; padding: 9px 10px; background: transparent; color: var(--muted); font-size: 15px; white-space: nowrap; }
+  .tabs button.on { background: var(--accent-soft); color: var(--text); }
+  .tabs.sub button { font-size: 14px; padding: 8px 8px; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+  .pill.warn { background: var(--warn-soft); color: var(--warn); }
+  .pill.danger { background: var(--danger-soft); color: var(--danger); }
+  .progress { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; margin: 10px 0 10px; }
+  .progress > div { height: 100%; background: var(--accent); border-radius: 99px; }
+  .item { padding: 14px 0; border-top: 1px solid var(--line); }
+  .item:first-child { border-top: 0; padding-top: 4px; }
+  .item-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .item-top > div:first-child { min-width: 0; overflow-wrap: anywhere; }
+  .tags { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+  .count { font-weight: 700; font-size: 15px; }
+  .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: 15px; margin: 14px 0; cursor: pointer; }
+  .check input { width: 20px; height: 20px; margin-top: 2px; flex: none; accent-color: var(--accent); }
+  .dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0 0 14px; font-size: 15px; }
+  .dl dt { color: var(--muted); }
+  .dl dd { margin: 0; overflow-wrap: anywhere; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+  .grid2 label { min-height: 2.6em; display: flex; align-items: flex-end; }
+  .search { display: flex; gap: 8px; margin-bottom: 14px; }
+  .search input { flex: 1; }
+  ol.steps { padding-left: 20px; margin: 4px 0 16px; }
+  ol.steps li { margin: 6px 0; }
+  .toast {
+    position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+    max-width: calc(100% - 32px); width: max-content; padding: 11px 16px; border-radius: 10px; font-size: 15px;
+    background: var(--text); color: var(--bg); transition: opacity .2s, transform .2s; z-index: 20;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast.err { background: var(--danger); color: #fff; }
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: flex-end; justify-content: center; padding: 16px; z-index: 10; }
+  .modal[hidden] { display: none; }
+  .modal-box { background: var(--card); color: var(--text); border-radius: 16px; padding: 20px; width: 100%; max-width: 560px; max-height: 85vh; overflow-y: auto; }
+  @media (min-width: 600px) { .modal { align-items: center; } }
+  @media (max-width: 380px) { .grid2 { grid-template-columns: 1fr; } .grid2 label { min-height: 0; } }
+</style>
+</head>
+<body>
+<main id="app"><p class="muted center">Loading…</p></main>
+<footer class="small muted"><a href="privacy.html">Privacy</a></footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="modal" class="modal" hidden><div class="modal-box" id="modal-box" role="dialog" aria-modal="true"></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0/dist/umd/supabase.js"></script>
+<script>
+// =================== EDIT THESE ===================
+const CONFIG = {
+  supabaseUrl: "https://hyydwbinwrrsljlkyhzg.supabase.co",
+  supabaseKey: "sb_publishable_pIDeh1ySRT3Md2VcB0kvvA_bF5NiRIu",   // publishable key — meant to be public
+  googleClientId: "1051921352508-gommfurvpvafp58173lp29pu6jm18ge3.apps.googleusercontent.com",   // public
+  communityName: "IIT Patna Student Alumni Association",
+  defaultCountryCode: "91",                    // added to 10-digit numbers typed without a country code
+};
+// ==================================================
+
+const $app = document.getElementById('app');
+const configured = /^https:\/\//.test(CONFIG.supabaseUrl) && !/^PASTE/.test(CONFIG.supabaseKey);
+
+// ---------- helpers ----------
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pageUrl = () => location.origin + location.pathname;
+const fmtDate = d => d ? new Date(d).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+const fmtPhone = p => p ? '+' + p : '';
+const firstName = n => String(n || '').split(' ')[0];
+const meta = r => [r.branch, r.year].filter(Boolean).join(' · ');
+const people = n => `${n} ${n === 1 ? 'person' : 'people'}`;
+const safeLink = u => /^https:\/\//i.test(u || '') ? u : null;
+const waShare = text => `https://wa.me/?text=${encodeURIComponent(text)}`;
+
+// Country code box + number box -> digits with country code, e.g. "919876543210".
+// A number typed with its own "+44…" or "0044…" wins over the country code box.
+function normPhone(ccRaw, numRaw) {
+  const num = String(numRaw || '').trim();
+  if (num.startsWith('+')) return num.replace(/\D/g, '');
+  let d = num.replace(/\D/g, '');
+  if (d.startsWith('00')) return d.slice(2);
+  d = d.replace(/^0+/, '');                       // local trunk prefix, e.g. 098765…
+  return String(ccRaw || '').replace(/\D/g, '') + d;
+}
+
+function phoneProblem(d) {
+  if (d.length < 8 || d.length > 15) return 'Enter your WhatsApp number with the country code.';
+  if (d.startsWith('91') && d.length !== 12) return 'Indian numbers have 10 digits after +91.';
+  return null;
+}
+
+function notify(text, type = 'ok') {
+  const t = document.getElementById('toast');
+  t.textContent = text;
+  t.className = `toast show ${type}`;
+  clearTimeout(notify.timer);
+  notify.timer = setTimeout(() => { t.className = 'toast'; }, type === 'err' ? 6000 : 3500);
+}
+function openModal(html) { document.getElementById('modal-box').innerHTML = html; document.getElementById('modal').hidden = false; }
+function closeModal() { document.getElementById('modal').hidden = true; }
+
+const STATUS = {
+  pending: ['Waiting for vouches', 'warn'], disputed: ['Under review', 'warn'], expired: ['Expired', 'danger'], approved: ['Approved', ''],
+  member: ['Member', ''], rejected: ['Rejected', 'danger'], removed: ['Removed', 'danger'], closed: ['Not approved', 'danger'],
+};
+const pill = (status) => { const [label, cls] = STATUS[status] || [status, '']; return `<span class="pill ${cls}">${esc(label)}</span>`; };
+const card = inner => `<section class="card">${inner}</section>`;
+const errorCard = msg => card(`<p>Something went wrong:</p><p class="small muted">${esc(msg)}</p><button class="secondary" data-action="reload">Try again</button>`);
+
+// ---------- state ----------
+let sb = null, session = null, me = null, editing = false;
+let tab = 'vouch', adminTab = 'approved', adminQuery = '';
+let seq = 0;
+
+const params = new URLSearchParams(location.search);
+let vouchCode = params.get('v');
+
+function setUrl() {
+  history.replaceState(null, '', vouchCode ? `${pageUrl()}?v=${encodeURIComponent(vouchCode)}` : pageUrl());
+}
+
+async function rpc(name, args) {
+  const { data, error } = await sb.rpc(name, args);
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+// ---------- startup ----------
+async function init() {
+  if (!configured) { $app.innerHTML = headerHtml() + setupHtml(); return; }
+  if (!window.supabase) { $app.innerHTML = headerHtml() + card('<p>Couldn’t load the page. Check your connection and refresh.</p>'); return; }
+  sb = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseKey, {
+    auth: { flowType: 'pkce', persistSession: true, detectSessionInUrl: true, autoRefreshToken: true },
+  });
+  const authError = params.get('error_description');
+  const { data } = await sb.auth.getSession();   // also finishes a Google sign-in redirect
+  session = data.session;
+  setUrl();
+  if (authError) notify(authError, 'err');
+  sb.auth.onAuthStateChange((_event, s) => {
+    const changed = (s?.user?.id || null) !== (session?.user?.id || null);
+    session = s;
+    if (changed) setTimeout(refresh, 0);
+  });
+  await refresh();
+}
+
+async function refresh() {
+  if (session) {
+    try { me = await rpc('get_me'); } catch (e) { me = null; notify(e.message, 'err'); }
+  } else { me = null; }
+  render();
+}
+
+function render() {
+  const t = ++seq;
+  let html = headerHtml(), after = null;
+  if (!session) html += signedOutHtml();
+  else if (!me) html += errorCard('Couldn’t load your account.');
+  else if (vouchCode) { html += '<div id="pane"><p class="muted center">Loading…</p></div>'; after = fillVouchPage; }
+  else if (!me.person || editing) html += applyHtml(editing ? me.person : null);
+  else {
+    const st = me.person.status;
+    if (st === 'pending' || st === 'disputed') html += pendingHtml();
+    else if (st === 'expired') html += expiredHtml();
+    else if (st === 'approved') html += approvedHtml();
+    else if (st === 'member') { html += memberShellHtml(); after = fillMemberPane; }
+    else html += closedHtml(st);
+  }
+  $app.innerHTML = html;
+  if (!session) mountGoogleButton();
+  if (after) after(t);
+}
+
+// ---------- Sign in with Google (Google's own button; no redirect via supabase.co) ----------
+async function makeNonce() {
+  const bytes = crypto.getRandomValues(new Uint8Array(24));
+  const raw = Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
+  return { raw, hashed: Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, '0')).join('') };
+}
+
+async function mountGoogleButton() {
+  const slot = document.getElementById('g-btn');
+  if (!slot || !CONFIG.googleClientId || !window.google?.accounts?.id) return;
+  const nonce = await makeNonce();
+  google.accounts.id.initialize({
+    client_id: CONFIG.googleClientId,
+    nonce: nonce.hashed,
+    ux_mode: 'popup',
+    itp_support: true,
+    callback: async resp => {
+      const { error } = await sb.auth.signInWithIdToken({ provider: 'google', token: resp.credential, nonce: nonce.raw });
+      if (error) { notify(error.message, 'err'); mountGoogleButton(); }
+      // On success, onAuthStateChange picks up the new session.
+    },
+  });
+  slot.innerHTML = '';
+  const dark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+  google.accounts.id.renderButton(slot, {
+    type: 'standard', size: 'large', text: 'continue_with', shape: 'pill', logo_alignment: 'center',
+    theme: dark ? 'filled_black' : 'outline', width: Math.min(400, Math.max(200, slot.clientWidth || 320)),
+  });
+}
+window.onGoogleLibraryLoad = mountGoogleButton;
+
+const pane = () => document.getElementById('pane');
+
+// ---------- views: everyone ----------
+function headerHtml() {
+  const who = session?.user?.email;
+  return `<header>
+    <div><h1>${esc(CONFIG.communityName)}</h1>${who ? `<div class="small muted">${esc(who)}</div>` : ''}</div>
+    ${session ? '<button class="secondary sm" data-action="signout">Sign out</button>' : ''}
+  </header>`;
+}
+
+function setupHtml() {
+  return card(`<h2>Almost set up</h2>
+    <p>Open <b>index.html</b> and paste your Supabase Project URL and publishable key into <code>CONFIG</code> at the top of the script. See SETUP.md for the steps.</p>`);
+}
+
+function signInHtml() {
+  if (!CONFIG.googleClientId) return '<p class="small muted">Sign-in isn’t switched on yet. Please check back soon.</p>';
+  return `<div id="g-btn" class="g-btn"></div>
+    <p class="small muted center mt">Opened this from WhatsApp and the button doesn’t work? Open the page in Chrome or Safari.</p>`;
+}
+
+function signedOutHtml() {
+  if (vouchCode) {
+    return card(`<h2>Someone asked you to vouch for them</h2>
+      <p class="muted">Sign in to see who it is. Only members of ${esc(CONFIG.communityName)} can vouch.</p>
+      ${signInHtml()}`);
+  }
+  return card(`<h2>Request to join</h2>
+    <p class="muted">To keep this community real, every new member is vouched for by people already in it.</p>
+    <ol class="steps">
+      <li>Sign in and fill in your name, roll number and WhatsApp number.</li>
+      <li>Send your personal link to members who know you, and ask them to vouch for you.</li>
+      <li>Once enough members vouch, ask to join on WhatsApp and an admin lets you in.</li>
+    </ol>
+    ${signInHtml()}`);
+}
+
+function applyHtml(p) {
+  const v = p || {};
+  // Split a saved number back into the two boxes. Non-default numbers go in whole, with a '+'.
+  const def = CONFIG.defaultCountryCode;
+  let cc = def, national = '';
+  if (p && v.phone.startsWith(def)) national = v.phone.slice(def.length);
+  else if (p) national = fmtPhone(v.phone);
+  return card(`<h2>${p ? 'Edit your details' : 'Your details'}</h2>
+    <p class="small muted">Members vouching for you see your name, branch, batch and the last 4 digits of your number. Only admins see your roll number and full number.</p>
+    <form data-form="apply" novalidate>
+      <label for="f-name">Full name</label>
+      <input type="text" id="f-name" name="name" required maxlength="80" autocomplete="name" value="${esc(v.full_name)}">
+      <label for="f-roll">College roll number</label>
+      <input type="text" id="f-roll" name="roll" required maxlength="40" autocapitalize="characters" value="${esc(v.roll_number)}">
+      <label for="f-branch">Branch / course</label>
+      <input type="text" id="f-branch" name="branch" maxlength="60" value="${esc(v.branch)}">
+      <label for="f-year">Batch</label>
+      <input type="text" id="f-year" name="year" maxlength="20" placeholder="e.g. 2021–2025" value="${esc(v.year)}">
+      <label for="f-phone">WhatsApp number</label>
+      <div class="phone">
+        <input type="tel" id="f-cc" name="cc" aria-label="Country code" maxlength="5" value="+${esc(cc)}">
+        <input type="tel" id="f-phone" name="phone" required autocomplete="tel-national" placeholder="98765 43210" value="${esc(national)}">
+      </div>
+      <p class="small muted mt">Outside India? Change the country code, e.g. +1, +44 or +971. Use the number you’ll join WhatsApp with, because admins match it to your join request.</p>
+      <p class="small" data-phone-preview>${p ? `Admins will look for <b class="mono">${esc(fmtPhone(v.phone))}</b>` : ''}</p>
+      <div class="row">
+        <button class="primary full" type="submit">${p ? 'Save' : 'Send request'}</button>
+        ${p ? '<button type="button" class="secondary full" data-action="cancel-edit">Cancel</button>' : ''}
+      </div>
+    </form>`);
+}
+
+function detailsHtml(p, canEdit) {
+  return card(`<h2>Your details</h2>
+    <dl class="dl">
+      <dt>Name</dt><dd>${esc(p.full_name)}</dd>
+      <dt>Roll number</dt><dd>${esc(p.roll_number)}</dd>
+      ${p.branch ? `<dt>Branch</dt><dd>${esc(p.branch)}</dd>` : ''}
+      ${p.year ? `<dt>Batch</dt><dd>${esc(p.year)}</dd>` : ''}
+      <dt>WhatsApp</dt><dd class="mono">${esc(fmtPhone(p.phone))}</dd>
+    </dl>
+    ${canEdit ? '<button class="secondary" data-action="edit">Edit details</button>'
+              : '<p class="small muted">Your details are locked because someone has vouched for you.</p>'}`);
+}
+
+function vouchersLine() {
+  return me.vouchers.length ? `Vouched by ${me.vouchers.map(v => esc(v.name)).join(', ')}.` : '';
+}
+
+function pendingHtml() {
+  const p = me.person, n = me.vouch_count, need = me.rules.vouches_needed;
+  const link = `${pageUrl()}?v=${p.code}`;
+  const text = `Hi! I'm requesting to join ${CONFIG.communityName}. New members need vouches from people already in it. If you know me, please vouch for me here: ${link}`;
+  const held = p.status === 'disputed';
+  return card(`${pill(p.status)}
+      <h2 class="mt">${n} of ${need} vouches</h2>
+      <div class="progress" aria-hidden="true"><div style="width:${Math.min(100, Math.round(n / need * 100))}%"></div></div>
+      ${held ? '<p>A member raised a concern about your request, so it’s on hold until an admin reviews it. You can still collect vouches meanwhile.</p>' : ''}
+      <p class="small muted">${vouchersLine()}${held ? '' : ` Your request stays open until ${esc(fmtDate(p.expires_at))}.`}</p>`)
+    + card(`<h2>Get vouched</h2>
+      <p>Send this link to members who know you personally. Send it from your own WhatsApp, so they can tell it’s really you.</p>
+      <input type="text" class="mono" readonly value="${esc(link)}" aria-label="Your vouch link" data-selectall>
+      <div class="row">
+        <a class="btn primary" href="${esc(waShare(text))}" target="_blank" rel="noopener">Share on WhatsApp</a>
+        <button class="secondary" data-action="copy" data-text="${esc(link)}">Copy link</button>
+      </div>`)
+    + detailsHtml(p, n === 0);
+}
+
+function expiredHtml() {
+  const p = me.person, n = me.vouch_count, need = me.rules.vouches_needed;
+  return card(`${pill('expired')}
+      <h2 class="mt">Your request ran out of time</h2>
+      <p>You got ${n} of ${need} vouches before it closed. They still count, so renew it and collect the rest.</p>
+      <button class="primary" data-action="renew">Renew my request</button>`)
+    + detailsHtml(p, n === 0);
+}
+
+function approvedHtml() {
+  const p = me.person, link = safeLink(me.invite_link);
+  return card(`${pill('approved')}
+    <h2 class="mt">You’re vouched for!</h2>
+    <p>Last step: ask to join the WhatsApp community from <b class="mono">${esc(fmtPhone(p.phone))}</b>. An admin will let you in.</p>
+    ${link ? `<a class="btn primary full" href="${esc(link)}" target="_blank" rel="noopener">Ask to join on WhatsApp</a>`
+           : '<p class="muted">An admin will send you the join link.</p>'}
+    <p class="small muted mt">Use that exact number. Admins only approve requests that match it.</p>
+    <p class="small muted">${vouchersLine()}</p>`);
+}
+
+function closedHtml(st) {
+  return st === 'removed'
+    ? card(`${pill('removed')}<h2 class="mt">You’re no longer a member</h2><p>If you think this is a mistake, talk to an admin.</p>`)
+    : card(`${pill('rejected')}<h2 class="mt">Your request wasn’t approved</h2><p>If you think this is a mistake, talk to an admin.</p>`);
+}
+
+// ---------- vouch link page ----------
+async function fillVouchPage(t) {
+  let r;
+  try { r = await rpc('request_by_code', { p_code: vouchCode }); }
+  catch (e) { if (t === seq) pane().innerHTML = errorCard(e.message); return; }
+  if (t !== seq) return;
+  const home = '<button class="secondary full" data-action="home">Go to my page</button>';
+  if (!r) { pane().innerHTML = card('<h2>Link not found</h2><p class="muted">This link doesn’t match any request. Check it was copied in full.</p>') + home; return; }
+  if (r.is_me) { pane().innerHTML = card('<h2>This is your own link</h2><p class="muted">Send it to members who know you so they can vouch for you.</p>') + home; return; }
+
+  const open = r.status === 'pending' || r.status === 'disputed';
+  const objectBtn = r.object_block_reason ? ''
+    : `<button class="danger full mt" data-action="object" data-code="${esc(r.code)}" data-name="${esc(r.full_name)}">They don’t belong here</button>`;
+  let action;
+  if (r.i_objected) {
+    action = `<p><span class="pill danger">You objected</span></p>
+      <button class="secondary" data-action="unobject" data-code="${esc(r.code)}">Take back my objection</button>`;
+  } else if (r.i_vouched && open) {
+    action = `<p><span class="pill">You vouched ✓</span></p>
+      <button class="secondary" data-action="unvouch" data-code="${esc(r.code)}">Take back my vouch</button>`;
+  } else if (open) {
+    action = (r.block_reason ? `<p class="muted">${esc(r.block_reason)}</p>`
+      : `<label class="check"><input type="checkbox" id="resp">
+          <span>I personally know ${esc(r.full_name)}, their WhatsApp number ends in <b class="mono">${esc(r.phone_last4)}</b>, and I take responsibility for them joining.</span></label>
+        <button class="primary full" data-action="vouch" data-need-check data-code="${esc(r.code)}" data-name="${esc(r.full_name)}" data-last4="${esc(r.phone_last4)}">Vouch for ${esc(firstName(r.full_name))}</button>`)
+      + objectBtn;
+  } else if (r.status === 'approved' || r.status === 'member') {
+    action = '<p class="muted">They already have enough vouches.</p>' + (r.status === 'approved' ? objectBtn : '');
+  } else {
+    action = `<p class="muted">${r.status === 'expired' ? 'This request has expired. Ask them to renew it.' : 'This request is closed.'}</p>`;
+  }
+  pane().innerHTML = card(`<p class="small muted">Vouch request</p>
+      <h2>${esc(r.full_name)}</h2>
+      ${meta(r) ? `<p class="small">${esc(meta(r))}</p>` : ''}
+      <p class="small">WhatsApp number ending in <b class="mono">${esc(r.phone_last4)}</b></p>
+      <p class="small muted">${r.vouch_count} of ${r.vouches_needed} vouches so far</p>
+      ${r.status === 'disputed' ? `<p class="small">${pill('disputed')} A member raised a concern, and an admin will review it.</p>` : ''}
+      ${action}`)
+    + card(`<p class="small muted"><b>Before you vouch:</b> make sure they sent you this link themselves, from a number you recognise. If someone you vouch for turns out to be fake, you lose your vouching rights.</p>`)
+    + home;
+}
+
+// ---------- members ----------
+function vouchingBlocked() {
+  const p = me.person;
+  if (!p.can_vouch) return 'Your vouching rights are paused. Talk to an admin.';
+  if (me.can_vouch_from && new Date(me.can_vouch_from) > new Date()) return `New members wait a few days before vouching. You can start on ${fmtDate(me.can_vouch_from)}.`;
+  if (me.vouches_left_this_week <= 0) return 'You’ve used all your vouches for this week.';
+  return null;
+}
+
+function memberShellHtml() {
+  const p = me.person;
+  if (tab === 'admin' && !p.is_admin) tab = 'vouch';
+  const blocked = vouchingBlocked();
+  const left = me.vouches_left_this_week;
+  const line = blocked || `You have ${left} ${left === 1 ? 'vouch' : 'vouches'} left this week.`;
+  const tabBtn = (id, label) => `<button class="${tab === id ? 'on' : ''}" data-action="tab" data-tab="${id}">${label}</button>`;
+  return card(`${pill('member')}${p.is_admin ? ' <span class="pill">Admin</span>' : ''}
+      <h2 class="mt">Hi, ${esc(firstName(p.full_name))}</h2>
+      <p class="small muted">${esc(line)}</p>
+      <p class="small">Know someone who should join? <a href="${esc(waShare(`Want to join ${CONFIG.communityName}? Request here: ${pageUrl()}`))}" target="_blank" rel="noopener">Send them the link</a></p>`)
+    + `<nav class="tabs">${tabBtn('vouch', 'Vouch')}${tabBtn('mine', 'My vouches')}${p.is_admin ? tabBtn('admin', 'Admin') : ''}</nav>
+       <div id="pane"><p class="muted center">Loading…</p></div>`;
+}
+
+async function fillMemberPane(t) {
+  try {
+    let html;
+    if (tab === 'mine') html = mineHtml(await rpc('my_vouches'));
+    else if (tab === 'admin') html = await adminHtml();
+    else html = vouchListHtml(await rpc('pending_requests'));
+    if (t === seq && pane()) pane().innerHTML = html;
+  } catch (e) {
+    if (t === seq && pane()) pane().innerHTML = errorCard(e.message);
+  }
+}
+
+function objectingBlocked() {
+  const p = me.person;
+  return !p.can_vouch || (me.can_vouch_from && new Date(me.can_vouch_from) > new Date());
+}
+
+function listActions(r, can, canObj) {
+  const c = esc(r.code), nm = esc(r.full_name);
+  if (r.i_vouched) return `<div class="row"><span class="pill">You vouched ✓</span><button class="link small" data-action="unvouch" data-code="${c}">Take back</button></div>`;
+  if (r.i_objected) return `<div class="row"><span class="pill danger">You objected</span><button class="link small" data-action="unobject" data-code="${c}">Take back</button></div>`;
+  const btns = (can ? `<button class="primary sm" data-action="vouch" data-code="${c}" data-name="${nm}" data-last4="${esc(r.phone_last4)}">Vouch</button>` : '')
+    + (canObj ? `<button class="danger sm" data-action="object" data-code="${c}" data-name="${nm}">Doesn’t belong</button>` : '');
+  return btns ? `<div class="row">${btns}</div>` : '';
+}
+
+function vouchListHtml(list) {
+  if (!list.length) return card('<p class="muted">Nobody is waiting for vouches right now.</p>');
+  const need = me.rules.vouches_needed, can = !vouchingBlocked(), canObj = !objectingBlocked();
+  return card(`<input type="search" placeholder="Search by name, branch or year" aria-label="Search requests" data-filter>
+    <p class="small muted mt">${list.length} waiting. Only vouch for people you know personally: you’re responsible for everyone you vouch for. Tap <b>Doesn’t belong</b> only if you’re sure someone shouldn’t be here.</p>
+    <div class="list">${list.map(r => `
+      <div class="item" data-s="${esc(`${r.full_name} ${r.branch} ${r.year}`.toLowerCase())}">
+        <div class="item-top">
+          <div><strong>${esc(r.full_name)}</strong>
+            <div class="small muted">${meta(r) ? esc(meta(r)) + ' · ' : ''}number ends in <span class="mono">${esc(r.phone_last4)}</span></div>
+          </div>
+          <div class="tags">${r.status === 'disputed' ? pill('disputed') : ''}<span class="count mono" title="vouches">${r.vouch_count}/${need}</span></div>
+        </div>
+        ${listActions(r, can, canObj)}
+      </div>`).join('')}
+    </div>`);
+}
+
+function mineHtml(list) {
+  return card(`<p class="small muted">You’re responsible for everyone you vouch for. If one of them turns out to be fake, you lose your vouching rights.</p>
+    ${list.length ? list.map(r => `
+      <div class="item"><div class="item-top">
+        <div><strong>${esc(r.full_name)}</strong>
+          <div class="small muted">${meta(r) ? esc(meta(r)) + ' · ' : ''}vouched ${esc(fmtDate(r.at))}</div></div>
+        <div class="tags">${pill(r.status)}</div>
+      </div></div>`).join('')
+    : '<p class="muted">You haven’t vouched for anyone yet.</p>'}`);
+}
+
+// ---------- admin ----------
+const ADMIN_HINT = {
+  approved: 'These people have enough vouches. In WhatsApp, approve the join request from the matching number, then tap <b>Added</b>. Reject any WhatsApp request from a number that isn’t on this list.',
+  disputed: 'A member objected to these requests. Read the reasons. <b>Dismiss objections</b> lets the request carry on (it’s approved if it already has enough vouches). <b>Reject</b> closes it.',
+  pending: 'Still collecting vouches. Use <b>Let in as founder</b> only for people who were already in the community before this site.',
+  member: 'Tap a name to look that person up. <b>Remove as fake</b> removes them and everyone who got in only because of them.',
+  closed: 'Expired, rejected and removed requests.',
+};
+
+async function adminHtml() {
+  const sub = (id, label) => `<button class="${adminTab === id ? 'on' : ''}" data-action="atab" data-tab="${id}">${label}</button>`;
+  const nav = `<nav class="tabs sub">${sub('approved', 'To add')}${sub('disputed', 'Review')}${sub('pending', 'Pending')}${sub('member', 'Members')}${sub('closed', 'Closed')}${sub('settings', 'Settings')}</nav>`;
+  if (adminTab === 'settings') return nav + settingsHtml(await rpc('admin_get_settings'));
+  const list = await rpc('admin_list', { p_status: adminTab, p_q: adminQuery || null });
+  return nav + `<form class="search" data-form="admin-search">
+      <input type="search" name="q" value="${esc(adminQuery)}" placeholder="Name, roll number or phone" aria-label="Search">
+      <button class="secondary">Search</button>
+    </form>`
+    + card(`<p class="small muted">${ADMIN_HINT[adminTab]}</p>
+      ${adminQuery ? `<p class="small">Showing results for “${esc(adminQuery)}” · <button class="link" data-action="clear-search">Clear</button></p>` : ''}
+      ${list.length ? list.map(adminItemHtml).join('') : '<p class="muted">Nobody here.</p>'}`);
+}
+
+function adminItemHtml(r) {
+  const isMe = r.id === me.person.id;
+  const names = arr => arr.map(n => `<button class="link" data-action="find" data-q="${esc(n)}">${esc(n)}</button>`).join(', ');
+  const how = r.joined_via === 'founder'
+    ? `Founding member${r.added_by ? `, let in by ${esc(r.added_by)}` : ''}`
+    : r.vouched_by.length ? `Vouched by ${names(r.vouched_by)}${r.added_by ? ` · added by ${esc(r.added_by)}` : ''}` : 'No vouches yet';
+  const when = r.status === 'member' ? `Member since ${fmtDate(r.member_since)}`
+    : r.status === 'approved' ? `Approved ${fmtDate(r.approved_at)}` : `Requested ${fmtDate(r.requested_at)}`;
+  const tags = [adminTab === 'closed' || adminTab === 'member' ? '' : pill(r.status),
+    r.is_admin ? '<span class="pill">Admin</span>' : '',
+    r.can_vouch ? '' : '<span class="pill danger">Vouching paused</span>'].join('');
+  const op = (code, label, cls = 'secondary') =>
+    `<button class="${cls} sm" data-action="admin" data-op="${code}" data-id="${esc(r.id)}" data-name="${esc(r.full_name)}">${label}</button>`;
+
+  const activeObjections = r.objections.filter(o => !o.dismissed);
+  let actions = '';
+  if (isMe) actions = r.can_vouch ? '' : op('restore_vouching', 'Restore vouching');
+  else if (r.status === 'approved') actions = op('added', 'Added on WhatsApp', 'primary') + op('reject', 'Reject', 'danger');
+  else if (r.status === 'disputed') actions = op('dismiss_objections', 'Dismiss objections') + op('reject', 'Reject', 'danger');
+  else if (r.status === 'pending' || r.status === 'expired') actions = op('founder', 'Let in as founder') + op('reject', 'Reject', 'danger');
+  else if (r.status === 'member') actions =
+      (r.is_admin ? op('remove_admin', 'Remove admin') : op('make_admin', 'Make admin'))
+    + (r.can_vouch ? op('pause_vouching', 'Pause vouching') : op('restore_vouching', 'Restore vouching'))
+    + op('remove', 'Remove') + op('fake', 'Remove as fake…', 'danger');
+  else if (r.status === 'rejected' || r.status === 'removed') actions =
+      (r.status === 'rejected' && activeObjections.length ? op('dismiss_objections', 'Dismiss objections & restore') : '')
+    + op('reopen', 'Reopen');
+
+  return `<div class="item">
+    <div class="item-top">
+      <div><strong>${esc(r.full_name)}</strong>${isMe ? ' <span class="small muted">(you)</span>' : ''}
+        <div class="small">Roll <b class="mono">${esc(r.roll_number)}</b>${meta(r) ? ' · ' + esc(meta(r)) : ''}</div>
+        <div class="small"><a class="mono" href="https://wa.me/${esc(r.phone)}" target="_blank" rel="noopener">${esc(fmtPhone(r.phone))}</a></div>
+      </div>
+      <div class="tags">${adminTab === 'closed' ? pill(r.status) : ''}${tags}</div>
+    </div>
+    <div class="small muted mt">${how}</div>
+    ${r.vouched_for.length ? `<div class="small muted">Vouched for ${names(r.vouched_for)}</div>` : ''}
+    ${r.objections.length ? `<div class="objections small">${r.objections.map(o =>
+        `<div${o.dismissed ? ' class="muted"' : ''}>${names([o.name])} objected: “${esc(o.reason)}”${o.dismissed ? ' (dismissed)' : ''}</div>`).join('')}</div>` : ''}
+    <div class="small muted">${esc(when)}</div>
+    ${actions ? `<div class="row">${actions}</div>` : ''}
+  </div>`;
+}
+
+function settingsHtml(s) {
+  return card(`<form data-form="settings">
+    <label for="s-link">WhatsApp community invite link</label>
+    <input type="url" id="s-link" name="invite_link" value="${esc(s.invite_link)}" placeholder="https://chat.whatsapp.com/…">
+    <p class="small muted mt">Only shown to approved people. Keep “Approve new members” on in WhatsApp so the link alone can’t get anyone in.</p>
+    <div class="grid2">
+      <div><label for="s-need">Vouches needed to approve</label><input type="number" id="s-need" name="vouches_needed" min="1" max="10" value="${esc(s.vouches_needed)}"></div>
+      <div><label for="s-obj">Objections needed to reject</label><input type="number" id="s-obj" name="objections_needed" min="1" max="10" value="${esc(s.objections_needed)}"></div>
+      <div><label for="s-week">Vouches per member per week</label><input type="number" id="s-week" name="weekly_limit" min="1" max="50" value="${esc(s.weekly_limit)}"></div>
+      <div><label for="s-wait">Days before new members can vouch</label><input type="number" id="s-wait" name="wait_days" min="0" max="90" value="${esc(s.wait_days)}"></div>
+      <div><label for="s-days">Days a request stays open</label><input type="number" id="s-days" name="request_days" min="1" max="90" value="${esc(s.request_days)}"></div>
+    </div>
+    <button class="primary mt" type="submit">Save settings</button>
+  </form>`);
+}
+
+async function fakeFlow(id, name) {
+  let rep;
+  try { rep = await rpc('admin_chain_preview', { p_id: id }); } catch (e) { return notify(e.message, 'err'); }
+  const rm = rep.remove, pause = rep.pause;
+  openModal(`<h2>Remove ${esc(name)} as fake</h2>
+    <p class="small">This removes <b>${people(rm.length)}</b>: ${esc(name)}, plus anyone who got in only because of their vouch (and so on down the line). People who also had enough vouches from real members stay.</p>
+    <div class="list">${rm.map(p => `<div class="item">
+        <div class="item-top"><div><strong>${esc(p.full_name)}</strong>
+          <div class="small muted">Roll ${esc(p.roll_number)} · <span class="mono">${esc(fmtPhone(p.phone))}</span></div>
+          <div class="small muted">${p.vouched_by.length ? 'Vouched by ' + p.vouched_by.map(esc).join(', ') : 'No vouches'}</div></div>
+          <div class="tags">${pill(p.status)}</div></div>
+      </div>`).join('')}</div>
+    ${pause.length ? `<p class="small mt">Vouching will be paused for <b>${pause.length}</b> ${pause.length === 1 ? 'member' : 'members'} who vouched for someone in this chain: ${pause.map(p => esc(p.full_name)).join(', ')}. You can restore them later.</p>` : ''}
+    <div class="row">
+      <button class="danger-solid" data-action="fake-confirm" data-id="${esc(id)}">Remove ${people(rm.length)}</button>
+      <button class="secondary" data-action="close-modal">Cancel</button>
+    </div>`);
+}
+
+async function fakeConfirm(b) {
+  b.disabled = true;
+  try {
+    const rep = await rpc('admin_remove_chain', { p_id: b.dataset.id });
+    const inWa = rep.remove.filter(p => p.status === 'member');
+    const nums = inWa.map(p => fmtPhone(p.phone)).join('\n');
+    openModal(`<h2>Chain removed</h2>
+      ${inWa.length
+        ? `<p>Now remove ${inWa.length === 1 ? 'this number' : `these ${inWa.length} numbers`} from the WhatsApp community:</p>
+           <div class="list">${inWa.map(p => `<div class="item"><strong>${esc(p.full_name)}</strong> <span class="mono">${esc(fmtPhone(p.phone))}</span></div>`).join('')}</div>
+           <div class="row"><button class="secondary" data-action="copy" data-text="${esc(nums)}">Copy numbers</button><button class="primary" data-action="close-modal">Done</button></div>`
+        : `<p>None of them had been added to WhatsApp yet, so there’s nothing to remove there.</p>
+           <div class="row"><button class="primary" data-action="close-modal">Done</button></div>`}`);
+    render();
+  } catch (e) { b.disabled = false; notify(e.message, 'err'); }
+}
+
+const ADMIN_CONFIRM = {
+  reject: n => `Reject ${n}'s request?`,
+  remove: n => `Remove ${n}? Nobody gets penalised. Remember to remove them from WhatsApp too.\n\nIf they're fake, cancel and use "Remove as fake" instead.`,
+  founder: n => `Let ${n} in as a founding member? They skip vouching and can vouch for others right away.\n\nOnly do this for people already in the community.`,
+  make_admin: n => `Make ${n} an admin? Admins can approve, reject and remove anyone.`,
+  remove_admin: n => `Remove ${n} as an admin?`,
+  pause_vouching: n => `Pause ${n}'s vouching rights?`,
+  reopen: n => `Reopen ${n}'s request? Their old vouches and objections are cleared and they start again.`,
+  dismiss_objections: n => `Dismiss the objections to ${n}? Their request carries on, and is approved if it already has enough vouches.`,
+};
+
+function objectFlow(code, name) {
+  const n = me.rules.objections_needed;
+  openModal(`<h2>Object to ${esc(name)}</h2>
+    <p class="small">Only do this if you’re sure they don’t belong here. For example, they’re not from our college, or they’re pretending to be someone else.</p>
+    <p class="small muted">${n === 1 ? 'One objection rejects a request.' : `One objection puts the request on hold for admins to review. ${n} objections reject it.`} Admins see your name and reason; the person doesn’t.</p>
+    <form data-form="object" data-code="${esc(code)}" data-name="${esc(name)}">
+      <label for="o-reason">Why don’t they belong?</label>
+      <textarea id="o-reason" name="reason" rows="3" maxlength="300" required></textarea>
+      <div class="row">
+        <button class="danger-solid" type="submit">Object</button>
+        <button type="button" class="secondary" data-action="close-modal">Cancel</button>
+      </div>
+    </form>`);
+  document.getElementById('o-reason').focus();
+}
+
+async function submitObjection(form) {
+  const reason = String(new FormData(form).get('reason') || '').trim();
+  if (reason.length < 5) return notify('Please say briefly why they don’t belong.', 'err');
+  const btn = form.querySelector('[type=submit]');
+  btn.disabled = true;
+  try {
+    await rpc('raise_objection', { p_code: form.dataset.code, p_reason: reason });
+    closeModal();
+    notify(`Objection recorded for ${form.dataset.name}.`);
+    await refresh();
+  } catch (e) { btn.disabled = false; notify(e.message, 'err'); }
+}
+
+async function doUnobject(b) {
+  if (!confirm('Take back your objection?')) return;
+  b.disabled = true;
+  try { await rpc('withdraw_objection', { p_code: b.dataset.code }); notify('Objection taken back.'); await refresh(); }
+  catch (e) { b.disabled = false; notify(e.message, 'err'); }
+}
+
+async function adminOp(b) {
+  const { op, id, name } = b.dataset;
+  if (op === 'fake') return fakeFlow(id, name);
+  if (ADMIN_CONFIRM[op] && !confirm(ADMIN_CONFIRM[op](name))) return;
+  b.disabled = true;
+  try {
+    await rpc('admin_action', { p_id: id, p_action: op });
+    notify(op === 'added' ? `${name} marked as added.` : 'Done.');
+    render();
+  } catch (e) { b.disabled = false; notify(e.message, 'err'); }
+}
+
+// ---------- actions ----------
+async function doVouch(b) {
+  const { code, name, last4 } = b.dataset;
+  if (b.hasAttribute('data-need-check')) {
+    if (!document.getElementById('resp')?.checked) return notify('Tick the box first to confirm you know them.', 'err');
+  } else if (!confirm(`Vouch for ${name}?\n\nOnly vouch if you know them personally and their WhatsApp number ends in ${last4}. You're taking responsibility: if they turn out to be fake, you lose your vouching rights.`)) {
+    return;
+  }
+  b.disabled = true;
+  try { await rpc('vouch', { p_code: code }); notify(`You vouched for ${name}.`); await refresh(); }
+  catch (e) { b.disabled = false; notify(e.message, 'err'); }
+}
+
+async function doUnvouch(b) {
+  if (!confirm('Take back your vouch?')) return;
+  b.disabled = true;
+  try { await rpc('unvouch', { p_code: b.dataset.code }); notify('Vouch taken back.'); await refresh(); }
+  catch (e) { b.disabled = false; notify(e.message, 'err'); }
+}
+
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); notify('Copied.'); }
+  catch { window.prompt('Copy this:', text); }
+}
+
+async function submitApply(form) {
+  const f = new FormData(form);
+  const phone = normPhone(f.get('cc'), f.get('phone'));
+  const problem = phoneProblem(phone);
+  if (problem) return notify(problem, 'err');
+  const btn = form.querySelector('[type=submit]');
+  btn.disabled = true;
+  const first = !me.person;
+  try {
+    me = await rpc('submit_request', {
+      p_name: f.get('name'), p_roll: f.get('roll'), p_branch: f.get('branch'), p_year: f.get('year'), p_phone: phone,
+    });
+    editing = false;
+    notify(first ? 'Request sent. Now share your link with members who know you.' : 'Saved.');
+    render();
+  } catch (e) { btn.disabled = false; notify(e.message, 'err'); }
+}
+
+async function submitSettings(form) {
+  const f = new FormData(form);
+  const num = k => parseInt(f.get(k), 10);
+  const btn = form.querySelector('[type=submit]');
+  btn.disabled = true;
+  try {
+    await rpc('admin_update_settings', {
+      p_vouches_needed: num('vouches_needed'), p_objections_needed: num('objections_needed'), p_wait_days: num('wait_days'),
+      p_weekly_limit: num('weekly_limit'), p_request_days: num('request_days'),
+      p_invite_link: String(f.get('invite_link') || ''),
+    });
+    notify('Settings saved.');
+    await refresh();
+  } catch (e) { btn.disabled = false; notify(e.message, 'err'); }
+}
+
+document.addEventListener('click', async e => {
+  if (e.target.id === 'modal') return closeModal();
+  const b = e.target.closest('[data-action]');
+  if (!b) return;
+  switch (b.dataset.action) {
+    case 'signout': await sb.auth.signOut(); session = null; me = null; editing = false; return render();
+    case 'reload': return refresh();
+    case 'home': vouchCode = null; setUrl(); return render();
+    case 'edit': editing = true; return render();
+    case 'cancel-edit': editing = false; return render();
+    case 'renew':
+      b.disabled = true;
+      try { me = await rpc('renew_request'); notify('Request renewed.'); render(); }
+      catch (err) { b.disabled = false; notify(err.message, 'err'); }
+      return;
+    case 'copy': return copyText(b.dataset.text);
+    case 'vouch': return doVouch(b);
+    case 'unvouch': return doUnvouch(b);
+    case 'object': return objectFlow(b.dataset.code, b.dataset.name);
+    case 'unobject': return doUnobject(b);
+    case 'tab': tab = b.dataset.tab; return render();
+    case 'atab': adminTab = b.dataset.tab; adminQuery = ''; return render();
+    case 'find': closeModal(); adminTab = 'member'; adminQuery = b.dataset.q; return render();
+    case 'clear-search': adminQuery = ''; return render();
+    case 'admin': return adminOp(b);
+    case 'fake-confirm': return fakeConfirm(b);
+    case 'close-modal': return closeModal();
+  }
+});
+
+document.addEventListener('submit', e => {
+  const form = e.target.closest('[data-form]');
+  if (!form) return;
+  e.preventDefault();
+  const kind = form.dataset.form;
+  if (kind === 'apply') submitApply(form);
+  else if (kind === 'object') submitObjection(form);
+  else if (kind === 'settings') submitSettings(form);
+  else if (kind === 'admin-search') { adminQuery = String(new FormData(form).get('q') || '').trim(); render(); }
+});
+
+document.addEventListener('input', e => {
+  if (e.target.id === 'f-cc' || e.target.id === 'f-phone') {
+    const form = e.target.form, out = form.querySelector('[data-phone-preview]');
+    const d = normPhone(form.elements.cc.value, form.elements.phone.value);
+    out.innerHTML = phoneProblem(d) ? '' : `Admins will look for <b class="mono">${esc(fmtPhone(d))}</b>`;
+    return;
+  }
+  if (!e.target.matches('[data-filter]')) return;
+  const q = e.target.value.trim().toLowerCase();
+  e.target.closest('.card').querySelectorAll('.item[data-s]').forEach(el => { el.hidden = !!q && !el.dataset.s.includes(q); });
+});
+
+document.addEventListener('focusin', e => { if (e.target.matches('[data-selectall]')) e.target.select(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+init();
+</script>
+<script src="https://accounts.google.com/gsi/client" async></script>
+</body>
+</html>
