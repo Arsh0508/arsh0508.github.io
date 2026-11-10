@@ -454,14 +454,15 @@ function memberShellHtml() {
   const p = me.person;
   if (tab === 'admin' && !p.is_admin) tab = 'vouch';
   const blocked = vouchingBlocked();
-  const left = me.vouches_left_this_week;
+  const left = me.vouches_left_this_week, link = safeLink(me.invite_link);
   const line = blocked || (me.unlimited_vouches ? 'As an admin, you have no weekly vouch limit.'
     : `You have ${left} ${left === 1 ? 'vouch' : 'vouches'} left this week.`);
   const tabBtn = (id, label) => `<button class="${tab === id ? 'on' : ''}" data-action="tab" data-tab="${id}">${label}</button>`;
   return card(`${pill('member')}${p.is_admin ? ' <span class="pill">Admin</span>' : ''}
       <h2 class="mt">Hi, ${esc(firstName(p.full_name))}</h2>
       <p class="small muted">${esc(line)}</p>
-      <p class="small">Know someone who should join? <a href="${esc(waShare(`Want to join ${CONFIG.communityName}? Request here: ${pageUrl()}`))}" target="_blank" rel="noopener">Send them the link</a></p>`)
+      <p class="small">Know someone who should join? <a href="${esc(waShare(`Want to join ${CONFIG.communityName}? Request here: ${pageUrl()}`))}" target="_blank" rel="noopener">Send them the link</a></p>
+      ${link ? `<p class="small">Not in the WhatsApp community yet? <a href="${esc(link)}" target="_blank" rel="noopener">Ask to join</a> from <b class="mono">${esc(fmtPhone(p.phone))}</b>.</p>` : ''}`)
     + `<nav class="tabs">${tabBtn('vouch', 'Vouch')}${tabBtn('mine', 'My vouches')}${p.is_admin ? tabBtn('admin', 'Admin') : ''}</nav>
        <div id="pane"><p class="muted center">Loading…</p></div>`;
 }
